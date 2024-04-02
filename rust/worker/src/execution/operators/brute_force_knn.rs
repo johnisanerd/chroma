@@ -1,4 +1,5 @@
-use crate::execution::data::data_chunk::DataChunk;
+use crate::execution::data::data_chunk::Chunk;
+use crate::types::LogRecord;
 use crate::{distance::DistanceFunction, execution::operator::Operator};
 use async_trait::async_trait;
 use std::cmp::Ord;
@@ -21,7 +22,7 @@ pub struct BruteForceKnnOperator {}
 /// * `distance_metric` - The distance metric to use.
 #[derive(Debug)]
 pub struct BruteForceKnnOperatorInput {
-    pub data: DataChunk,
+    pub data: Chunk<LogRecord>,
     pub query: Vec<f32>,
     pub k: usize,
     pub distance_metric: DistanceFunction,
@@ -36,7 +37,7 @@ pub struct BruteForceKnnOperatorInput {
 /// One row for each query vector.
 #[derive(Debug)]
 pub struct BruteForceKnnOperatorOutput {
-    pub data: DataChunk,
+    pub data: Chunk<LogRecord>,
     pub indices: Vec<usize>,
     pub distances: Vec<f32>,
 }
@@ -167,7 +168,7 @@ mod tests {
                 },
             },
         ];
-        let data_chunk = DataChunk::new(data.into());
+        let data_chunk = Chunk::new(data.into());
 
         let input = BruteForceKnnOperatorInput {
             data: data_chunk,
@@ -225,7 +226,7 @@ mod tests {
                 },
             },
         ];
-        let data_chunk = DataChunk::new(data.into());
+        let data_chunk = Chunk::new(data.into());
 
         let input = BruteForceKnnOperatorInput {
             data: data_chunk,
@@ -259,7 +260,7 @@ mod tests {
             },
         }];
 
-        let data_chunk = DataChunk::new(data.into());
+        let data_chunk = Chunk::new(data.into());
 
         let input = BruteForceKnnOperatorInput {
             data: data_chunk,

@@ -251,6 +251,8 @@ class GrpcSysDB(SysDB):
             name=name,
             tenant=tenant,
             database=database,
+            limit=limit,
+            offset=offset,
         )
         response: GetCollectionsResponse = self._sys_db_stub.GetCollections(request)
         results: List[Collection] = []

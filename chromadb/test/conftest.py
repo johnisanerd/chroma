@@ -384,7 +384,10 @@ def integration() -> Generator[System, None, None]:
     """Fixture generator for returning a client configured via environmenet
     variables, intended for externally configured integration tests
     """
-    settings = Settings(allow_reset=True)
+    settings = Settings(allow_reset=True,
+        chroma_sysdb_impl="chromadb.db.impl.grpc.client.GrpcSysDB",
+        chroma_coordinator_host="localhost",
+        chroma_server_grpc_port="50051",)
     system = System(settings)
     system.start()
     yield system

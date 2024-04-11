@@ -73,12 +73,16 @@ func (s *collectionDb) GetCollections(id *string, name *string, tenantID string,
 			log.Error("scan collection failed", zap.Error(err))
 			return nil, err
 		}
+	
 		collection := &dbmodel.Collection{
 			ID:          collectionID,
 			Name:        &collectionName,
 			DatabaseID:  collectionDatabaseID,
 			LogPosition: logPosition,
 			Version:     version,
+		}
+		if collectionDimension.Valid {
+			collection.Dimension = &collectionDimension.Int32
 		}
 
 		collectionWithMetdata = append(collectionWithMetdata, &dbmodel.CollectionAndMetadata{
